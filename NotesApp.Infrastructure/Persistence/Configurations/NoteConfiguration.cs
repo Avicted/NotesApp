@@ -29,6 +29,11 @@ public class NoteConfiguration : IEntityTypeConfiguration<Note>
         builder.HasOne(n => n.User)
             .WithMany(u => u.Notes)
             .HasForeignKey(n => n.UserId)
-            .IsRequired();
+            .IsRequired(false);
+
+        builder.HasOne(n => n.Category)
+            .WithMany(c => c.Notes)
+            .HasForeignKey(n => n.CategoryId)
+            .IsRequired(false);
     }
 }

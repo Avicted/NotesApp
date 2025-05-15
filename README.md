@@ -1,6 +1,6 @@
 # NotesApp
 
-Authenticated users can perform CRUD operations on markdown notes. 
+Authenticated users can perform CRUD operations on markdown notes and their categories.
 The application uses dotnet 9.0 and ASP.NET Core Identity for authentication and authorization, and it is built using the Clean Architecture principles.
 
 The database is SQLite and Entity Framework Core is used for data access.

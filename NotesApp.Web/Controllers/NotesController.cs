@@ -3,7 +3,6 @@ using NotesApp.Application.Notes.Commands;
 using MediatR;
 using NotesApp.Application.Notes.Queries;
 using Microsoft.AspNetCore.Authorization;
-using NotesApp.Application.DTOs;
 
 namespace NotesApp.Web.Controllers;
 
@@ -50,9 +49,10 @@ public class NotesController : ControllerBase
     {
         var note = await _mediator.Send(new UpdateNoteInternalCommand
         {
-            Id = id,                    // From URL
-            Title = command.Title,      // From body
-            Content = command.Content   // From body
+            Id = id,                            // From URL
+            Title = command.Title,              // From body
+            Content = command.Content,          // From body
+            CategoryId = command.CategoryId     // From body
         });
 
         if (note == null)

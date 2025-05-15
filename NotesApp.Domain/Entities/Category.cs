@@ -1,16 +1,14 @@
 namespace NotesApp.Domain.Entities;
 
-public class Note
+public class Category
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public string Title { get; set; } = string.Empty;
-    public string ContentMarkdown { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     public DateTime Created { get; set; } = DateTime.UtcNow;
     public DateTime LastModified { get; set; } = DateTime.UtcNow;
 
     public string UserId { get; set; } = string.Empty; // Foreign key to the User entity
     public User? User { get; set; } = null!; // Navigation property to the User entity
-    public Guid? CategoryId { get; set; } // Foreign key to the Category entity
-    public Category? Category { get; set; } = null!; // Navigation property to the Category entity
+    public ICollection<Note> Notes { get; set; } = []; // Navigation property to the Note entity
 }

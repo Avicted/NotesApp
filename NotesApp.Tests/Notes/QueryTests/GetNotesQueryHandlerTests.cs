@@ -1,10 +1,11 @@
-﻿using Moq;
+﻿using Microsoft.Extensions.Logging;
+using Moq;
 using NotesApp.Application.DTOs;
 using NotesApp.Application.Interfaces;
 using NotesApp.Application.Notes.Queries;
 using NotesApp.Domain.Entities;
 
-namespace NotesApp.Tests;
+namespace NotesApp.Tests.Notes.QueryTests;
 
 public class GetNotesQueryHandlerTests
 {
@@ -27,7 +28,8 @@ public class GetNotesQueryHandlerTests
                     }
                 });
 
-        var handler = new GetAllNotesQueryHandler(mockRepo.Object);
+        var mockLogger = new Mock<ILogger<GetAllNotesQueryHandler>>();
+        var handler = new GetAllNotesQueryHandler(mockRepo.Object, mockLogger.Object);
 
         // Act
         var result = await handler.Handle(new GetAllNotesQuery(), CancellationToken.None);
@@ -49,7 +51,8 @@ public class GetNotesQueryHandlerTests
         mockRepo.Setup(r => r.GetAllNotesAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new List<Note>());
 
-        var handler = new GetAllNotesQueryHandler(mockRepo.Object);
+        var mockLogger = new Mock<ILogger<GetAllNotesQueryHandler>>();
+        var handler = new GetAllNotesQueryHandler(mockRepo.Object, mockLogger.Object);
 
         // Act
         var result = await handler.Handle(new GetAllNotesQuery(), CancellationToken.None);
@@ -67,7 +70,8 @@ public class GetNotesQueryHandlerTests
         mockRepo.Setup(r => r.GetAllNotesAsync(It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception("Database error"));
 
-        var handler = new GetAllNotesQueryHandler(mockRepo.Object);
+        var mockLogger = new Mock<ILogger<GetAllNotesQueryHandler>>();
+        var handler = new GetAllNotesQueryHandler(mockRepo.Object, mockLogger.Object);
 
         // Act & Assert
         await Assert.ThrowsAsync<Exception>(() => handler.Handle(new GetAllNotesQuery(), CancellationToken.None));
@@ -99,7 +103,8 @@ public class GetNotesQueryHandlerTests
                     }
                 });
 
-        var handler = new GetAllNotesQueryHandler(mockRepo.Object);
+        var mockLogger = new Mock<ILogger<GetAllNotesQueryHandler>>();
+        var handler = new GetAllNotesQueryHandler(mockRepo.Object, mockLogger.Object);
 
         // Act
         var result = await handler.Handle(new GetAllNotesQuery(), CancellationToken.None);
@@ -143,7 +148,8 @@ public class GetNotesQueryHandlerTests
         mockRepo.Setup(r => r.GetAllNotesAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new List<Note> { note2, note1 });
 
-        var handler = new GetAllNotesQueryHandler(mockRepo.Object);
+        var mockLogger = new Mock<ILogger<GetAllNotesQueryHandler>>();
+        var handler = new GetAllNotesQueryHandler(mockRepo.Object, mockLogger.Object);
 
         // Act
         var result = await handler.Handle(new GetAllNotesQuery(), CancellationToken.None);
@@ -181,7 +187,8 @@ public class GetNotesQueryHandlerTests
                     }
                 });
 
-        var handler = new GetAllNotesQueryHandler(mockRepo.Object);
+        var mockLogger = new Mock<ILogger<GetAllNotesQueryHandler>>();
+        var handler = new GetAllNotesQueryHandler(mockRepo.Object, mockLogger.Object);
 
         // Act
         var result = await handler.Handle(new GetAllNotesQuery(), CancellationToken.None);

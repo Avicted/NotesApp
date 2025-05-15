@@ -33,7 +33,7 @@ public class DeleteNoteHandler : IRequestHandler<DeleteNoteCommand, bool>
 
         if (note == null)
         {
-            throw new NoteOperationException(request.Id, "Failed to delete the note with ID " + request.Id);
+            throw new NotFoundException($"Note with ID {request.Id} not found.");
         }
 
         // Check that the note belongs to the user

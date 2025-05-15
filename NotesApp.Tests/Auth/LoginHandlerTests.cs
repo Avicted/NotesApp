@@ -1,6 +1,4 @@
-using System.Globalization;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +8,7 @@ using Moq;
 using NotesApp.Application.Auth.Commands;
 using NotesApp.Domain.Entities;
 
-namespace NotesApp.Tests;
+namespace NotesApp.Tests.Auth;
 
 public class LoginHandlerTests
 {

@@ -35,6 +35,11 @@ public class ExceptionHandlingMiddleware
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             await context.Response.WriteAsJsonAsync(new { message = ex.Message });
         }
+        catch (InvalidOperationException ex)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsJsonAsync(new { message = ex.Message });
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An unexpected error occurred.");
