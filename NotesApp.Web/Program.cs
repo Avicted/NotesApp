@@ -25,12 +25,11 @@ builder.Services.AddSwaggerGen(c =>
         Description = "An API for creating, editing, and managing notes with markdown support."
     });
 
-    // 👇 Define Cookie-based auth for Swagger
     c.AddSecurityDefinition("cookieAuth", new()
     {
         Type = SecuritySchemeType.ApiKey,
         In = ParameterLocation.Cookie,
-        Name = ".AspNetCore.Cookies", // Default cookie name
+        Name = ".NotesApp.Cookies", // Default cookie name
         Description = "Cookie-based authentication"
     });
 
