@@ -9,4 +9,8 @@ public class NoteOperationException : Exception
     {
         NoteId = noteId;
     }
+
+    public NoteOperationException(string? message) : base(message)
+    {
+    }
 }

@@ -2,6 +2,7 @@ using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using NotesApp.Application.DTOs;
+using NotesApp.Application.Exceptions;
 using NotesApp.Application.Interfaces;
 using NotesApp.Domain.Entities;
 
@@ -9,19 +10,22 @@ namespace NotesApp.Application.UseCases.Notes.Commands;
 
 public class CreateNoteCommand : IRequest<NoteDto>
 {
-    public string? Title { get; set; }
+    public string Title { get; set; } = string.Empty;
     public string? ContentMarkdown { get; set; }
+    public Guid? CategoryId { get; set; }
 }
 
 
 public class CreateNoteHandler : IRequestHandler<CreateNoteCommand, NoteDto>
 {
     private readonly INoteRepository _noteRepository;
+    private readonly ICategoryRepository _categoryRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public CreateNoteHandler(INoteRepository noteRepository, IHttpContextAccessor httpContextAccessor)
+    public CreateNoteHandler(INoteRepository noteRepository, ICategoryRepository categoryRepository, IHttpContextAccessor httpContextAccessor)
     {
         _noteRepository = noteRepository;
+        _categoryRepository = categoryRepository;
         _httpContextAccessor = httpContextAccessor;
     }
 
@@ -34,11 +38,26 @@ public class CreateNoteHandler : IRequestHandler<CreateNoteCommand, NoteDto>
             throw new UnauthorizedAccessException("User is not authenticated.");
         }
 
+        if (request.CategoryId.HasValue)
+        {
+            var category = await _categoryRepository.GetCategoryByIdAsync(request.CategoryId.Value, cancellationToken);
+            if (category == null)
+            {
+                throw new NotFoundException("Invalid CategoryId.");
+            }
+        }
+
+        if (string.IsNullOrEmpty(request.Title))
+        {
+            throw new NoteOperationException("Note title cannot be empty.");
+        }
+
         var note = new Note
         {
-            Title = request.Title ?? string.Empty,
+            Title = request.Title,
             ContentMarkdown = request.ContentMarkdown ?? string.Empty,
             UserId = userId,
+            CategoryId = request.CategoryId,
             Created = DateTime.UtcNow,
             LastModified = DateTime.UtcNow
         };
@@ -50,6 +69,7 @@ public class CreateNoteHandler : IRequestHandler<CreateNoteCommand, NoteDto>
             Id = created.Id,
             Title = created.Title,
             Content = created.ContentMarkdown,
+            CategoryId = created.CategoryId.ToString() ?? string.Empty,
             Created = created.Created,
             LastModified = created.LastModified
         };
