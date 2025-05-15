@@ -8,7 +8,7 @@ using Moq;
 using NotesApp.Application.UseCases.Auth.Commands;
 using NotesApp.Domain.Entities;
 
-namespace NotesApp.Tests.Auth;
+namespace NotesApp.Tests.Auth.CommandTests;
 
 public class LoginHandlerTests
 {
