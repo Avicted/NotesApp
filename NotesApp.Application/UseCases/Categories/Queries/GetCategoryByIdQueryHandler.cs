@@ -3,7 +3,7 @@ using NotesApp.Application.DTOs;
 using NotesApp.Application.Exceptions;
 using NotesApp.Application.Interfaces;
 
-namespace NotesApp.Application.Categories.Queries;
+namespace NotesApp.Application.UseCases.Categories.Queries;
 
 public class GetCategoryByIdQuery : IRequest<CategoryWithNotesDto>
 {

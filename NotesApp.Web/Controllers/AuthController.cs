@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NotesApp.Application.Auth.Commands;
+using NotesApp.Application.UseCases.Auth.Commands;
 
 namespace NotesApp.Web.Controllers;
 

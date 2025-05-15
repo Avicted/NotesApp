@@ -6,7 +6,7 @@ using System.Security.Claims;
 using NotesApp.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 
-namespace NotesApp.Application.Auth.Commands;
+namespace NotesApp.Application.UseCases.Auth.Commands;
 
 public class RegisterCommand : IRequest<RegisterResult>
 {

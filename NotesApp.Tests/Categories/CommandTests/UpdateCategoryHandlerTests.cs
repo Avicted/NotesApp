@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
-using NotesApp.Application.Categories.Commands;
+using NotesApp.Application.UseCases.Categories.Commands;
 using NotesApp.Application.Exceptions;
 using NotesApp.Application.Interfaces;
 using NotesApp.Domain.Entities;

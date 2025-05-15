@@ -6,7 +6,7 @@ using NotesApp.Application.DTOs;
 using NotesApp.Application.Exceptions;
 using NotesApp.Application.Interfaces;
 
-namespace NotesApp.Application.Notes.Commands;
+namespace NotesApp.Application.UseCases.Notes.Commands;
 
 public class UpdateNoteCommand
 {

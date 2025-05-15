@@ -5,7 +5,7 @@ using NotesApp.Application.DTOs;
 using NotesApp.Application.Interfaces;
 using NotesApp.Domain.Entities;
 
-namespace NotesApp.Application.Categories.Commands;
+namespace NotesApp.Application.UseCases.Categories.Commands;
 
 public class CreateCategoryCommand : IRequest<CategoryDto>
 {

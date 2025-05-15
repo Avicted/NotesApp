@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using NotesApp.Application.Categories.Queries;
+using NotesApp.Application.UseCases.Categories.Queries;
 using NotesApp.Application.DTOs;
 using NotesApp.Application.Interfaces;
 using NotesApp.Domain.Entities;

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Moq;
-using NotesApp.Application.Notes.Commands;
+using NotesApp.Application.UseCases.Notes.Commands;
 using NotesApp.Application.Interfaces;
 using NotesApp.Domain.Entities;
 

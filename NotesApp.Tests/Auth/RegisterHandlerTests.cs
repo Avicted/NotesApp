@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using NotesApp.Application.Auth.Commands;
+using NotesApp.Application.UseCases.Auth.Commands;
 using NotesApp.Domain.Entities;
 
 namespace NotesApp.Tests.Auth;

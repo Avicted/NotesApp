@@ -2,7 +2,7 @@ using MediatR;
 using NotesApp.Application.DTOs;
 using NotesApp.Application.Interfaces;
 
-namespace NotesApp.Application.Categories.Queries;
+namespace NotesApp.Application.UseCases.Categories.Queries;
 
 public class GetAllCategoriesQuery : IRequest<List<CategoryDto>>
 {

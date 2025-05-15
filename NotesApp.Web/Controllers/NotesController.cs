@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using NotesApp.Application.Notes.Commands;
+using NotesApp.Application.UseCases.Notes.Commands;
 using MediatR;
-using NotesApp.Application.Notes.Queries;
+using NotesApp.Application.UseCases.Notes.Queries;
 using Microsoft.AspNetCore.Authorization;
 
 namespace NotesApp.Web.Controllers;

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using NotesApp.Application.DTOs;
 using NotesApp.Application.Interfaces;
 
-namespace NotesApp.Application.Notes.Queries;
+namespace NotesApp.Application.UseCases.Notes.Queries;
 
 public class GetAllNotesQuery : IRequest<List<NoteDto>>
 {

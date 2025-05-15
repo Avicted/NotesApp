@@ -2,8 +2,8 @@ using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NotesApp.Application.Categories.Commands;
-using NotesApp.Application.Categories.Queries;
+using NotesApp.Application.UseCases.Categories.Commands;
+using NotesApp.Application.UseCases.Categories.Queries;
 
 namespace NotesApp.Web.Controllers;
 

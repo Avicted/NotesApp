@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NotesApp.Application.Exceptions;
 using NotesApp.Application.Interfaces;
-using NotesApp.Application.Notes.Commands;
 
-namespace NotesApp.Application.Categories.Commands;
+namespace NotesApp.Application.UseCases.Categories.Commands;
 
 public class DeleteCategoryCommand : IRequest<bool>
 {

@@ -6,7 +6,7 @@ using NotesApp.Application.DTOs;
 using NotesApp.Application.Exceptions;
 using NotesApp.Application.Interfaces;
 
-namespace NotesApp.Application.Categories.Commands;
+namespace NotesApp.Application.UseCases.Categories.Commands;
 
 public class UpdateCategoryCommand
 {

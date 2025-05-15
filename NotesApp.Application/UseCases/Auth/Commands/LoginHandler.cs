@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using NotesApp.Domain.Entities;
 
-namespace NotesApp.Application.Auth.Commands;
+namespace NotesApp.Application.UseCases.Auth.Commands;
 
 public record LoginCommand(string Email, string Password) : IRequest<LoginResult>;
 public record LoginResult(bool Success, string? Message);

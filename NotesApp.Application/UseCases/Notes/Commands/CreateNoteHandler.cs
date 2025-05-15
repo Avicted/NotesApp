@@ -5,7 +5,7 @@ using NotesApp.Application.DTOs;
 using NotesApp.Application.Interfaces;
 using NotesApp.Domain.Entities;
 
-namespace NotesApp.Application.Notes.Commands;
+namespace NotesApp.Application.UseCases.Notes.Commands;
 
 public class CreateNoteCommand : IRequest<NoteDto>
 {

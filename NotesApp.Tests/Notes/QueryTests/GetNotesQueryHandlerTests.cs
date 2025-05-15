@@ -2,7 +2,7 @@
 using Moq;
 using NotesApp.Application.DTOs;
 using NotesApp.Application.Interfaces;
-using NotesApp.Application.Notes.Queries;
+using NotesApp.Application.UseCases.Notes.Queries;
 using NotesApp.Domain.Entities;
 
 namespace NotesApp.Tests.Notes.QueryTests;
