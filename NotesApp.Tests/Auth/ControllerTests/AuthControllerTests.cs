@@ -5,7 +5,7 @@ using Moq;
 using NotesApp.Application.UseCases.Auth.Commands;
 using NotesApp.Web.Controllers;
 
-namespace NotesApp.Tests.Auth.ControllerTest;
+namespace NotesApp.Tests.Auth.ControllerTests;
 
 public class AuthControllerTests
 {
