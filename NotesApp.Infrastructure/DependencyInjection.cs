@@ -23,10 +23,12 @@ namespace NotesApp.Infrastructure
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddScoped<INoteRepository, NoteRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             services.AddAutoMapper(typeof(DependencyInjection));
 
             services.AddValidatorsFromAssemblyContaining<INoteRepository>();
+            services.AddValidatorsFromAssemblyContaining<ICategoryRepository>();
 
             services.AddHttpContextAccessor();
 

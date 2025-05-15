@@ -6,7 +6,7 @@ using NotesApp.Application.Exceptions;
 using NotesApp.Application.Interfaces;
 using NotesApp.Domain.Entities;
 
-namespace NotesApp.Tests;
+namespace NotesApp.Tests.Notes.CommandTests;
 
 public class DeleteNoteHandlerTests
 {
@@ -67,13 +67,12 @@ public class DeleteNoteHandlerTests
         var handler = new DeleteNoteHandler(mockRepo.Object, mockHttpContextAccessor.Object, mockLogger.Object);
 
         // Act & Assert
-        await Assert.ThrowsAsync<NoteOperationException>(async () =>
+        await Assert.ThrowsAsync<NotFoundException>(async () =>
             await handler.Handle(deleteNoteCommand, CancellationToken.None));
-
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowNoteOperationException_WhenNoteDoesNotExist()
+    public async Task Handle_ShouldThrowNotFoundException_WhenNoteDoesNotExist()
     {
         // Arrange
         var mockRepo = new Mock<INoteRepository>();
@@ -92,7 +91,7 @@ public class DeleteNoteHandlerTests
         var handler = new DeleteNoteHandler(mockRepo.Object, mockHttpContextAccessor.Object, mockLogger.Object);
 
         // Act & Assert
-        await Assert.ThrowsAsync<NoteOperationException>(async () =>
+        await Assert.ThrowsAsync<NotFoundException>(async () =>
             await handler.Handle(deleteNoteCommand, CancellationToken.None));
     }
 

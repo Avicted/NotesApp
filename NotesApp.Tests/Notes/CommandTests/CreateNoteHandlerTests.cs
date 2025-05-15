@@ -4,7 +4,7 @@ using NotesApp.Application.Notes.Commands;
 using NotesApp.Application.Interfaces;
 using NotesApp.Domain.Entities;
 
-namespace NotesApp.Tests;
+namespace NotesApp.Tests.Notes.CommandTests;
 
 public class CreateNoteHandlerTests
 {

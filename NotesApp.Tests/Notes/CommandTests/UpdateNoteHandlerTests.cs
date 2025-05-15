@@ -6,7 +6,7 @@ using NotesApp.Application.Exceptions;
 using NotesApp.Application.Interfaces;
 using NotesApp.Domain.Entities;
 
-namespace NotesApp.Tests;
+namespace NotesApp.Tests.Notes.CommandTests;
 
 public class UpdateNoteHandlerTests
 {
@@ -166,6 +166,44 @@ public class UpdateNoteHandlerTests
 
         // Act & Assert
         await Assert.ThrowsAsync<NoteOperationException>(() => handler.Handle(updateNoteCommand, CancellationToken.None));
+    }
+
+    [Fact]
+    public async Task Handle_ShouldUpdateCategoryId_WhenCategoryIdIsProvided()
+    {
+        // Arrange
+        var mockRepo = new Mock<INoteRepository>();
+        var noteId = Guid.NewGuid();
+        var newCategoryId = Guid.NewGuid();
+        var existingNote = new Note
+        {
+            Id = noteId,
+            UserId = "test-user",
+            CategoryId = null
+        };
+
+        var command = new UpdateNoteInternalCommand
+        {
+            Id = noteId,
+            CategoryId = newCategoryId.ToString()
+        };
+
+        mockRepo.Setup(r => r.GetNoteByIdAsync(noteId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(existingNote);
+
+        mockRepo.Setup(r => r.UpdateNoteAsync(It.IsAny<Note>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((Note n, CancellationToken _) => n);
+
+        // Act
+        var handler = new UpdateNoteHandler(mockRepo.Object, CreateMockHttpContextAccessorWithUser("test-user").Object, new Mock<ILogger<UpdateNoteHandler>>().Object);
+
+        var result = await handler.Handle(command, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(newCategoryId.ToString(), result.CategoryId);
+        mockRepo.Verify(r => r.UpdateNoteAsync(
+            It.Is<Note>(n => n.CategoryId == newCategoryId),
+            It.IsAny<CancellationToken>()));
     }
 
     private static Mock<IHttpContextAccessor> CreateMockHttpContextAccessorWithUser(string userId)

@@ -12,6 +12,7 @@ public class UpdateNoteCommand
 {
     public string Title { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
+    public string? CategoryId { get; set; } = string.Empty;
 }
 
 public class UpdateNoteInternalCommand : IRequest<NoteDto>
@@ -19,6 +20,7 @@ public class UpdateNoteInternalCommand : IRequest<NoteDto>
     public Guid Id { get; set; }
     public string? Title { get; set; }
     public string? Content { get; set; }
+    public string? CategoryId { get; set; } = string.Empty;
 }
 
 public class UpdateNoteHandler : IRequestHandler<UpdateNoteInternalCommand, NoteDto>
@@ -61,6 +63,13 @@ public class UpdateNoteHandler : IRequestHandler<UpdateNoteInternalCommand, Note
             note.ContentMarkdown = request.Content;
         }
 
+        if (request.CategoryId != null)
+        {
+            note.CategoryId = !string.IsNullOrEmpty(request.CategoryId)
+             ? Guid.Parse(request.CategoryId)
+             : null;
+        }
+
         var updatedNote = await _noteRepository.UpdateNoteAsync(note, cancellationToken);
         if (updatedNote == null)
         {
@@ -72,6 +81,7 @@ public class UpdateNoteHandler : IRequestHandler<UpdateNoteInternalCommand, Note
             Id = updatedNote.Id,
             Title = updatedNote.Title,
             Content = updatedNote.ContentMarkdown,
+            CategoryId = updatedNote.CategoryId?.ToString() ?? string.Empty,
             Created = updatedNote.Created,
             LastModified = updatedNote.LastModified
         };

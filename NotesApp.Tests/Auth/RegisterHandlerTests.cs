@@ -10,7 +10,7 @@ using Moq;
 using NotesApp.Application.Auth.Commands;
 using NotesApp.Domain.Entities;
 
-namespace NotesApp.Tests;
+namespace NotesApp.Tests.Auth;
 
 public class RegisterHandlerTests
 {

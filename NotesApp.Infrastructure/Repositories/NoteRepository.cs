@@ -23,12 +23,22 @@ public class NoteRepository : INoteRepository
 
     public async Task<List<Note>> GetAllNotesAsync(CancellationToken cancellationToken)
     {
-        return await _context.Notes.ToListAsync(cancellationToken);
+        return await _context.Notes
+            .Include(note => note.Category)
+            .ToListAsync(cancellationToken);
     }
 
     public async Task<Note?> GetNoteByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _context.Notes.FindAsync([id], cancellationToken);
+    }
+
+    public async Task<List<Note>> GetNotesByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken)
+    {
+        return await _context.Notes
+            .Include(note => note.Category)
+            .Where(note => note.CategoryId == categoryId)
+            .ToListAsync(cancellationToken);
     }
 
     public async Task<Note?> UpdateNoteAsync(Note note, CancellationToken cancellationToken)

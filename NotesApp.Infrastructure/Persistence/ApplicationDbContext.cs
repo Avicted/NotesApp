@@ -13,6 +13,7 @@ public class ApplicationDbContext : IdentityDbContext<User>
     }
 
     public DbSet<Note> Notes { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
     // Apply the model configurations from the Configurations directory
     protected override void OnModelCreating(ModelBuilder builder)

@@ -32,6 +32,7 @@ public class GetNoteByIdQueryHandler : IRequestHandler<GetNoteByIdQuery, NoteDto
             Id = note.Id,
             Title = note.Title,
             Content = note.ContentMarkdown,
+            CategoryId = note.CategoryId.ToString() ?? string.Empty,
             Created = note.Created,
             LastModified = note.LastModified
         };
