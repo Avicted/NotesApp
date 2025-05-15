@@ -9,7 +9,6 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
                        ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddInfrastructureServices(connectionString);
-
 builder.Services.AddApplicationServices();
 
 builder.Services.AddAuthorization();
@@ -29,7 +28,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Type = SecuritySchemeType.ApiKey,
         In = ParameterLocation.Cookie,
-        Name = ".NotesApp.Cookies", // Default cookie name
+        Name = ".NotesApp.Cookies",
         Description = "Cookie-based authentication"
     });
 
@@ -58,7 +57,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure middleware pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -69,11 +67,11 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
-
-app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
