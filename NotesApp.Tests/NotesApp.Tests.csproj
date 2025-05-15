@@ -24,5 +24,6 @@
     <ProjectReference Include="..\NotesApp.Domain\NotesApp.Domain.csproj" />
     <ProjectReference Include="..\NotesApp.Application\NotesApp.Application.csproj" />
     <ProjectReference Include="..\NotesApp.Infrastructure\NotesApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\NotesApp.Web\NotesApp.Web.csproj" />
   </ItemGroup>
 </Project>
