@@ -8,18 +8,18 @@ using NotesApp.Domain.Entities;
 
 namespace NotesApp.Application.UseCases.Categories.Commands;
 
-public class CreateCategoryCommand : IRequest<CategoryDto>
+public class CreateCategoryCommand : IRequest<CategoryDto?>
 {
     public string Name { get; set; } = string.Empty;
 }
 
-public class CreateCategoryInternalCommand : IRequest<CategoryDto>
+public class CreateCategoryInternalCommand : IRequest<CategoryDto?>
 {
     public string? Name { get; set; }
     public string? UserId { get; set; }
 }
 
-public class CreateCategoryHandler : IRequestHandler<CreateCategoryInternalCommand, CategoryDto>
+public class CreateCategoryHandler : IRequestHandler<CreateCategoryInternalCommand, CategoryDto?>
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -30,7 +30,7 @@ public class CreateCategoryHandler : IRequestHandler<CreateCategoryInternalComma
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<CategoryDto> Handle(CreateCategoryInternalCommand request, CancellationToken cancellationToken)
+    public async Task<CategoryDto?> Handle(CreateCategoryInternalCommand request, CancellationToken cancellationToken)
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -53,6 +53,11 @@ public class CreateCategoryHandler : IRequestHandler<CreateCategoryInternalComma
         };
 
         var created = await _categoryRepository.CreateCategoryAsync(category, cancellationToken);
+
+        if (created == null)
+        {
+            throw new CategoryOperationException("Failed to create category.");
+        }
 
         return new CategoryDto
         {

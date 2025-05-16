@@ -5,12 +5,12 @@ using NotesApp.Application.Interfaces;
 
 namespace NotesApp.Application.UseCases.Categories.Queries;
 
-public class GetCategoryByIdQuery : IRequest<CategoryWithNotesDto>
+public class GetCategoryByIdQuery : IRequest<CategoryWithNotesDto?>
 {
     public Guid Id { get; set; }
 }
 
-public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, CategoryWithNotesDto>
+public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, CategoryWithNotesDto?>
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly INoteRepository _noteRepository;
@@ -21,7 +21,7 @@ public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery,
         _noteRepository = noteRepository;
     }
 
-    public async Task<CategoryWithNotesDto> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
+    public async Task<CategoryWithNotesDto?> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
     {
         var category = await _categoryRepository.GetCategoryByIdAsync(request.Id, cancellationToken);
         if (category == null)
@@ -30,6 +30,7 @@ public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery,
         }
 
         var notes = await _noteRepository.GetNotesByCategoryIdAsync(request.Id, cancellationToken);
+
         var notesDto = notes.Select(note => new NoteDto
         {
             Id = note.Id,

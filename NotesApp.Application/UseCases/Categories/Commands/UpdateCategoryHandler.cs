@@ -13,14 +13,14 @@ public class UpdateCategoryCommand
     public string Name { get; set; } = default!;
 }
 
-public class UpdateCategoryInternalCommand : IRequest<CategoryDto>
+public class UpdateCategoryInternalCommand : IRequest<CategoryDto?>
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = default!;
     public string? UserId { get; set; } = string.Empty;
 }
 
-public class UpdateCategoryHandler : IRequestHandler<UpdateCategoryInternalCommand, CategoryDto>
+public class UpdateCategoryHandler : IRequestHandler<UpdateCategoryInternalCommand, CategoryDto?>
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -34,7 +34,7 @@ public class UpdateCategoryHandler : IRequestHandler<UpdateCategoryInternalComma
         _logger.LogInformation("UpdateCategoryHandler initialized.");
     }
 
-    public async Task<CategoryDto> Handle(UpdateCategoryInternalCommand request, CancellationToken cancellationToken)
+    public async Task<CategoryDto?> Handle(UpdateCategoryInternalCommand request, CancellationToken cancellationToken)
     {
         var category = await _categoryRepository.GetCategoryByIdAsync(request.Id, cancellationToken);
         if (category == null)

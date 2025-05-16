@@ -32,6 +32,11 @@ public class CategoriesController : ControllerBase
             UserId = userId,
         });
 
+        if (category == null)
+        {
+            return BadRequest("Failed to create category.");
+        }
+
         return CreatedAtAction(nameof(GetCategoryById), new { id = category.Id }, category);
     }
 
@@ -51,6 +56,11 @@ public class CategoriesController : ControllerBase
     public async Task<IActionResult> GetAllCategories()
     {
         var categories = await _mediator.Send(new GetAllCategoriesQuery());
+        if (categories == null || categories.Count == 0)
+        {
+            return NotFound();
+        }
+
         return Ok(categories);
     }
 
