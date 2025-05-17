@@ -24,8 +24,6 @@ public class NotesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateNote([FromBody] CreateNoteCommand command)
     {
-        var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
         var result = await _mediator.Send(command);
         var note = await _mediator.Send(new CreateNoteCommand
         {
