@@ -15,7 +15,7 @@ public class UpdateNoteCommand
     public string? CategoryId { get; set; } = string.Empty;
 }
 
-public class UpdateNoteInternalCommand : IRequest<NoteDto>
+public class UpdateNoteInternalCommand : IRequest<NoteDto?>
 {
     public Guid Id { get; set; }
     public string? Title { get; set; }
@@ -23,7 +23,7 @@ public class UpdateNoteInternalCommand : IRequest<NoteDto>
     public string? CategoryId { get; set; } = string.Empty;
 }
 
-public class UpdateNoteHandler : IRequestHandler<UpdateNoteInternalCommand, NoteDto>
+public class UpdateNoteHandler : IRequestHandler<UpdateNoteInternalCommand, NoteDto?>
 {
     private readonly INoteRepository _noteRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -37,7 +37,7 @@ public class UpdateNoteHandler : IRequestHandler<UpdateNoteInternalCommand, Note
         _logger.LogInformation("UpdateNoteHandler initialized.");
     }
 
-    public async Task<NoteDto> Handle(UpdateNoteInternalCommand request, CancellationToken cancellationToken)
+    public async Task<NoteDto?> Handle(UpdateNoteInternalCommand request, CancellationToken cancellationToken)
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var note = await _noteRepository.GetNoteByIdAsync(request.Id, cancellationToken);

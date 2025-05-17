@@ -3,6 +3,7 @@ using NotesApp.Application.UseCases.Notes.Commands;
 using MediatR;
 using NotesApp.Application.UseCases.Notes.Queries;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace NotesApp.Web.Controllers;
 
@@ -12,17 +13,33 @@ namespace NotesApp.Web.Controllers;
 public class NotesController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public NotesController(IMediator mediator)
+    public NotesController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
     {
         _mediator = mediator;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateNote([FromBody] CreateNoteCommand command)
     {
+        var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
         var result = await _mediator.Send(command);
-        return CreatedAtAction(nameof(GetNoteById), new { id = result.Id }, result);
+        var note = await _mediator.Send(new CreateNoteCommand
+        {
+            Title = command.Title,
+            ContentMarkdown = command.ContentMarkdown,
+            CategoryId = command.CategoryId,
+        });
+
+        if (note == null)
+        {
+            return BadRequest("Failed to create note.");
+        }
+
+        return CreatedAtAction(nameof(GetNoteById), new { id = note.Id }, note);
     }
 
     [HttpGet("{id}")]

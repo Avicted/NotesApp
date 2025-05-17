@@ -5,12 +5,12 @@ using NotesApp.Application.Interfaces;
 
 namespace NotesApp.Application.UseCases.Notes.Queries;
 
-public class GetNoteByIdQuery : IRequest<NoteDto>
+public class GetNoteByIdQuery : IRequest<NoteDto?>
 {
     public Guid Id { get; set; }
 }
 
-public class GetNoteByIdQueryHandler : IRequestHandler<GetNoteByIdQuery, NoteDto>
+public class GetNoteByIdQueryHandler : IRequestHandler<GetNoteByIdQuery, NoteDto?>
 {
     private readonly INoteRepository _noteRepository;
 
@@ -19,7 +19,7 @@ public class GetNoteByIdQueryHandler : IRequestHandler<GetNoteByIdQuery, NoteDto
         _noteRepository = noteRepository;
     }
 
-    public async Task<NoteDto> Handle(GetNoteByIdQuery request, CancellationToken cancellationToken)
+    public async Task<NoteDto?> Handle(GetNoteByIdQuery request, CancellationToken cancellationToken)
     {
         var note = await _noteRepository.GetNoteByIdAsync(request.Id, cancellationToken);
         if (note == null)

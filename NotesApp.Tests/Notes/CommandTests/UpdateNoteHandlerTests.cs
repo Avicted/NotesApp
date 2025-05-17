@@ -200,7 +200,7 @@ public class UpdateNoteHandlerTests
         var result = await handler.Handle(command, CancellationToken.None);
 
         // Assert
-        Assert.Equal(newCategoryId.ToString(), result.CategoryId);
+        Assert.Equal(newCategoryId.ToString(), result?.CategoryId);
         mockRepo.Verify(r => r.UpdateNoteAsync(
             It.Is<Note>(n => n.CategoryId == newCategoryId),
             It.IsAny<CancellationToken>()));
